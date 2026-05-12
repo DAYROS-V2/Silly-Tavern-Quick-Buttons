@@ -1,89 +1,150 @@
-/* --- QUAD GRID (New 2x2 Group) --- */
-.qf-quad-container {
+/* --- BASE CONTAINER (The Glass Look) --- */
+/* This applies to EVERYTHING: Main Bar, Grid, Floating, Docked */
+.quick-format-container {
+    position: fixed !important; 
+    display: flex !important; /* Default to Flex */
+    justify-content: center; 
+    align-items: center; 
+    gap: 5px;
+    z-index: 2000; 
+    
+    /* WIDTH SETTINGS */
+    width: max-content !important; 
+    max-width: 98vw !important;
+    
+    /* INTERACTION */
+    touch-action: none; 
+    pointer-events: auto !important;
+    
+    /* THE UNIFIED STYLE (Dark Glass) */
+    background: rgba(20, 20, 25, 0.95) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 8px !important;
+    padding: 6px !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5) !important;
+}
+
+.quick-format-container.editing {
+    z-index: 2147483647 !important; 
+    filter: drop-shadow(0 0 5px white); 
+    cursor: move !important;
+}
+
+/* --- LAYOUT OVERRIDES --- */
+
+/* 1. Flat Line Layout */
+.quick-format-container.qf-layout-flat {
+    display: flex !important;
+    flex-direction: row;
+}
+
+/* 2. Grid Layout (Forces 2x2) */
+.quick-format-container.qf-layout-grid {
     display: grid !important;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
-    gap: 5px;
-    background: rgba(20, 20, 25, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    padding: 6px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    width: auto !important;
+    align-items: center;
+    justify-items: center;
+    /* Grid needs to reset width to fit content */
+    width: auto !important; 
 }
 
-/* Ensure buttons in the grid look uniform */
-.qf-quad-container .quick-format-btn {
-    width: 40px; height: 40px;
+/* --- BUTTON STYLING --- */
+.quick-format-btn {
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    min-width: 32px; 
+    height: 32px;    
+    padding: 0 10px;
+    font-size: 14px; 
+    cursor: pointer; 
+    font-family: monospace;
+    touch-action: manipulation; 
+    user-select: none;
+    
+    /* Glass Button Style */
     border: 1px solid rgba(255,255,255,0.1);
     background: rgba(255,255,255,0.05);
+    color: white; 
+    border-radius: 4px;
     margin: 0 !important;
 }
-.qf-quad-container .quick-format-btn:hover {
-    background: rgba(255,255,255,0.2);
+
+.quick-format-btn:hover { 
+    background: rgba(255,255,255,0.2); 
 }
 
-/* --- EXISTING STYLES (Kept for compatibility) --- */
-.quick-format-container {
-    position: fixed !important; display: flex !important;
-    justify-content: center; align-items: flex-end; gap: 5px;
-    z-index: 2000; width: max-content !important; max-width: 98vw !important;
-    touch-action: none; pointer-events: auto !important;
-}
-.quick-format-container.editing {
-    z-index: 2147483647 !important; filter: drop-shadow(0 0 5px white); cursor: move !important;
+/* Bigger Icon Buttons (Grid Items) */
+.qf-group-container .quick-format-btn, 
+.qf-mood-container .quick-format-btn, 
+.qf-reply-container .quick-format-btn,
+.qf-tools-container .quick-format-btn {
+    width: 40px; 
+    height: 40px;
+    font-size: 18px;
 }
 
-/* Lock Button */
+/* --- LOCK BUTTON --- */
 .qf-lock-btn {
     position: absolute; top: -10px; right: -10px;
-    width: 24px; height: 24px; border-radius: 50%;
-    background: #ff4444; color: white; border: 2px solid white;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: #ff4444;
+    color: white;
+    border: 2px solid white;
     display: flex; align-items: center; justify-content: center;
-    font-size: 12px; cursor: pointer; z-index: 2147483647;
+    font-size: 12px; cursor: pointer;
+    z-index: 2147483647;
     box-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
 .qf-lock-btn:hover { background: #ff0000; transform: scale(1.1); }
 
-/* Standard Button */
-.quick-format-btn {
-    display: flex; align-items: center; justify-content: center;
-    min-width: 32px; height: 32px; padding: 0 10px;
-    font-size: 14px; cursor: pointer; font-family: monospace;
-    touch-action: manipulation; user-select: none;
-    border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5);
-    color: white; border-radius: 4px;
+/* --- CLEANING UP LEGACY STYLES --- */
+/* 
+   We removed the specific 'background: transparent' rules.
+   Now these classes only handle any residual structural tweaks 
+   if SillyTavern tries to enforce them, but our !important 
+   rules above should handle the look.
+*/
+.style-docked { 
+    border-bottom: 0; 
+    border-radius: 8px 8px 0 0 !important; /* Slight tweak for docking */
 }
-.quick-format-btn:hover { background: rgba(255,255,255,0.1); }
 
-/* Layouts */
-.style-docked { background-color: #1a1b1e; border: 1px solid #454545; border-bottom: 0; border-radius: 10px 10px 0 0; padding: 4px 10px 2px 10px; }
-.style-floating { background: transparent; padding: 4px; border: none; }
-
-/* Individual Icon Containers */
-.qf-mood-container .quick-format-btn, .qf-reply-container .quick-format-btn {
-    width: 45px; height: 45px; border-radius: 4px; 
-    background: rgba(20, 20, 25, 0.9); border: 1px solid rgba(255,255,255,0.2); 
-    font-size: 18px; color: white;
+.style-floating { 
+    /* No transparency here anymore! It inherits from base. */
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
 }
-.qf-tools-container {
-    background: rgba(20, 20, 25, 0.9); border: 1px solid rgba(255,255,255,0.2); 
-    border-radius: 8px; padding: 4px;
-}
-.qf-tools-container .quick-format-btn { background: transparent; border: none; }
 
-/* Mood Dropdown */
+/* --- MENUS & SLIDERS --- */
 #qf-mood-dropdown {
-    background: #1a1b1e; border: 1px solid #454545; border-radius: 8px;
-    padding: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-    min-width: 120px; display: flex; flex-direction: column; gap: 2px;
+    background: #1a1b1e; 
+    border: 1px solid #454545; 
+    border-radius: 8px;
+    padding: 5px; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    min-width: 120px; 
+    display: flex; flex-direction: column; gap: 2px;
 }
-.qf-dropdown-item { padding: 8px 12px; cursor: pointer; border-radius: 4px; display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.qf-dropdown-item { 
+    padding: 8px 12px; 
+    cursor: pointer; 
+    border-radius: 4px; 
+    display: flex; align-items: center; gap: 8px; 
+    font-size: 14px; 
+}
 .qf-dropdown-item:hover { background: rgba(255,255,255,0.1); }
 
-/* Settings Inputs */
-.qf-setting-row input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; background: rgba(255, 255, 255, 0.2); border-radius: 3px; outline: none; }
-.qf-setting-row input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; background: #000000; border: 2px solid #ffffff; border-radius: 50%; cursor: pointer; }
+.qf-setting-row input[type="range"] {
+    -webkit-appearance: none; appearance: none; width: 100%; height: 6px;
+    background: rgba(255, 255, 255, 0.2); border-radius: 3px; outline: none;
+}
+.qf-setting-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none; width: 16px; height: 16px;
+    background: #000000; border: 2px solid #ffffff; border-radius: 50%; cursor: pointer;
+}
+
 .qf-mood-item { background: rgba(255,255,255,0.05); margin-bottom: 5px; padding: 5px; border-radius: 4px; }
 .qf-mood-header { display: flex; justify-content: space-between; align-items: center; }
 .qf-mood-prompt { font-size: 0.8em; opacity: 0.7; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -95,3 +156,176 @@
 .qf-specific-api { background: rgba(0,0,0,0.15); padding: 5px; border-radius: 4px; margin-top: 10px; border-top: 1px solid #555; padding-top: 10px; }
 .qf-advanced { margin-top: 10px; background: rgba(0,0,0,0.1); border-radius: 4px; }
 .qf-advanced summary { padding: 5px; font-size: 0.9em; opacity: 0.8; }
+
+/* --- POLISH PASS --- */
+.quick-formatting-settings-wrapper {
+    --qf-accent: #ffffff;
+    --qf-accent-2: #ff5c5c;
+    --qf-panel: rgba(18, 20, 24, 0.62);
+    --qf-border: rgba(255, 255, 255, 0.12);
+}
+
+.quick-formatting-settings-wrapper .inline-drawer-content {
+    padding-top: 10px;
+}
+
+.qf-settings-top {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.qf-settings-top .checkbox_label,
+.qf-details,
+.qf-specific-api,
+.qf-advanced,
+.qf-mood-item {
+    border: 1px solid var(--qf-border);
+    background: var(--qf-panel);
+    backdrop-filter: blur(8px);
+}
+
+.qf-settings-top .checkbox_label {
+    border-radius: 6px;
+    padding: 6px 8px;
+}
+
+.qf-details {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.qf-details summary {
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.qf-details[open] summary {
+    color: var(--qf-accent);
+}
+
+.quick-format-container {
+    backdrop-filter: blur(14px) saturate(1.15);
+    border-color: rgba(255, 255, 255, 0.28) !important;
+}
+
+.quick-format-container.editing {
+    outline: 2px dashed var(--qf-accent);
+    outline-offset: 4px;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.75));
+}
+
+.quick-format-btn {
+    min-width: 36px;
+    border-color: rgba(255,255,255,0.16);
+    transition: transform 0.12s ease, background 0.12s ease, border-color 0.12s ease;
+}
+
+.quick-format-btn:hover {
+    border-color: rgba(255, 255, 255, 0.65);
+    transform: translateY(-1px);
+}
+
+.quick-format-btn:active {
+    transform: translateY(0) scale(0.96);
+}
+
+.quick-format-btn.qf-generating {
+    background: rgba(255, 92, 92, 0.32);
+    border-color: rgba(255, 92, 92, 0.78);
+}
+
+.quick-format-btn.qf-disabled {
+    filter: grayscale(1);
+}
+
+#qf-mood-dropdown {
+    backdrop-filter: blur(12px);
+    border-color: rgba(255, 255, 255, 0.32);
+    max-width: min(280px, 92vw);
+}
+
+.qf-dropdown-item {
+    white-space: nowrap;
+}
+
+.qf-dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.qf-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483647;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(0, 0, 0, 0.48);
+    backdrop-filter: blur(5px);
+}
+
+.qf-modal-card {
+    width: min(420px, 94vw);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 8px;
+    padding: 14px;
+    background: rgba(18, 20, 24, 0.96);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55);
+}
+
+.qf-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.qf-modal-header .menu_button {
+    min-width: 30px;
+    height: 30px;
+    padding: 0;
+}
+
+.qf-modal-actions {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    gap: 8px;
+    align-items: center;
+}
+
+.qf-modal-actions .menu_button {
+    min-height: 32px;
+}
+
+.qf-mood-header .menu_button {
+    min-width: 28px;
+    height: 28px;
+    padding: 0;
+}
+
+@media screen and (max-width: 600px) {
+    .quick-format-container {
+        gap: 4px;
+        padding: 5px !important;
+        max-width: 96vw !important;
+    }
+
+    .quick-format-btn {
+        min-width: 38px;
+        height: 38px;
+        padding: 0 8px;
+        font-size: 15px;
+    }
+
+    .qf-group-container .quick-format-btn,
+    .qf-mood-container .quick-format-btn,
+    .qf-reply-container .quick-format-btn,
+    .qf-tools-container .quick-format-btn {
+        width: 42px;
+        height: 42px;
+    }
+}

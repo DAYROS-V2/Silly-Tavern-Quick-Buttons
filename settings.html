@@ -6,19 +6,22 @@
         </div>
         <div class="inline-drawer-content">
             
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <div class="qf-settings-top">
                 <label class="checkbox_label">
                     <input id="qf_global_enabled" type="checkbox" /> <span>Enable Extension</span>
                 </label>
                 <label class="checkbox_label" title="Use one API Model for everything">
                     <input id="qf_use_global" type="checkbox" /> <span><b>Connect All Models</b></span>
                 </label>
+                <label class="checkbox_label" title="Log request details in the browser console for troubleshooting">
+                    <input id="qf_debug_logging" type="checkbox" /> <span>Debug Logging</span>
+                </label>
             </div>
             <hr class="sysHR" />
 
             <!-- 1. GLOBAL API SECTION -->
-            <div id="qf_section_global_api" style="display:none; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 5px; margin-bottom: 10px; border: 1px solid cyan;">
-                <h4 style="margin:0 0 5px 0; color: cyan;">Global API Settings</h4>
+            <div id="qf_section_global_api" style="display:none; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 5px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.24);">
+                <h4 style="margin:0 0 5px 0; color: #fff;">Global API Settings</h4>
                 <div class="qf-setting-row"><label>Provider</label><select id="qf_global_provider" class="text_pole"><option value="openrouter">OpenRouter</option><option value="openai">OpenAI</option></select></div>
                 <div class="qf-setting-row"><label>Key</label><input id="qf_global_key" class="text_pole" type="password" /></div>
                 <div class="qf-setting-row"><label>Base URL</label><input id="qf_global_base" class="text_pole" /></div>
@@ -46,10 +49,20 @@
                         <div id="qf_buttons_list" style="margin-left: 10px; display: flex; flex-direction: column; gap: 5px;"></div>
                     </div>
                     
-                    <!-- NEW GROUP TOGGLE -->
-                    <div class="checkbox_label" style="margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 5px;">
-                        <input id="qf_grouped_widgets" type="checkbox" /> 
-                        <span><b>Group Widgets (2x2 Grid)</b></span>
+                    <!-- GROUP TOGGLE & DROPDOWN -->
+                    <div style="margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 5px;">
+                        <div class="checkbox_label">
+                            <input id="qf_grouped_widgets" type="checkbox" /> 
+                            <span><b>Group Widgets</b></span>
+                        </div>
+                        
+                        <div id="qf_group_layout_wrapper" style="margin-left: 25px; margin-top: 5px; display: none;">
+                            <label style="font-size: 0.9em; opacity: 0.8;">Layout Style:</label>
+                            <select id="qf_group_layout" class="text_pole" style="width: 120px;">
+                                <option value="flat">Flat Line (1x4)</option>
+                                <option value="grid">Box Grid (2x2)</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="checkbox_label" style="margin-top: 5px;">
@@ -92,7 +105,7 @@
                 </div>
             </details>
 
-            <!-- 3. AUTO REPLY -->
+            <!-- 3. AUTO REPLY (LIGHTBULB) -->
             <details class="qf-details">
                 <summary>Auto-Reply</summary>
                 <div class="qf-details-content">
@@ -118,7 +131,7 @@
                 </div>
             </details>
 
-            <!-- 4. MOODS -->
+            <!-- 4. MOODS (BOTTOM) -->
             <details class="qf-details">
                 <summary>Moods & Tones</summary>
                 <div class="qf-details-content">
@@ -152,7 +165,7 @@
                     <div style="background: rgba(0,0,0,0.2); padding: 5px; border-radius: 5px;">
                         <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
                             <strong>Add New Mood</strong>
-                            <a href="https://fontawesome.com/search?m=free" target="_blank" style="font-size:0.8em; color:cyan; text-decoration:none;">
+                            <a href="https://fontawesome.com/search?m=free" target="_blank" style="font-size:0.8em; color:#fff; text-decoration:none;">
                                 <i class="fa-solid fa-search"></i> Find Icons
                             </a>
                         </div>
@@ -163,6 +176,12 @@
                     </div>
                 </div>
             </details>
+
+            <!-- 5. UNIVERSAL PERSONA (NEW MANUAL SETTING) -->
+            <div class="qf-setting-row" style="margin-top: 15px; border-top: 1px solid #555; padding-top: 10px;">
+                <label>Universal Persona (Manual Paste)</label>
+                <textarea id="qf_custom_persona" class="text_pole" rows="4" placeholder="Paste your Persona here. This will replace {{persona}} in prompts."></textarea>
+            </div>
 
             <button id="qf_reset_pos" class="menu_button" style="margin-top: 10px;">Reset All Positions</button>
         </div>

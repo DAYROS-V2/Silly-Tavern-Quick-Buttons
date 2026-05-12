@@ -1,11 +1,12 @@
 {
-    "display_name": "Quick Formatting & Spellchecker",
+    "display_name": "Quick Format",
     "loading_order": 100,
     "requires": [],
     "optional": [],
     "js": "index.js",
     "css": "style.css",
-    "author": "You",
-    "version": "1.0.0",
+    "author": "DAYROS-V2",
+    "version": "1.1.0",
+    "description": "Mobile-friendly quick formatting toolbar with spellcheck, mood rewriting, auto-reply, movable widgets, and OpenAI/OpenRouter support.",
     "homePage": "https://github.com/DAYROS-V2/SillyTavern-Writing-Assistant.git"
 }
